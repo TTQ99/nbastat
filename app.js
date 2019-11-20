@@ -1,18 +1,11 @@
 const Koa = require('koa')
 const InitManager = require('./core/init')
+const parser = require('koa-bodyparser')
 
 const app = new Koa()
 
+app.use(parser())
 InitManager.initCore(app)
-// requireDirectory(module, './app/api', {
-//   visit: (obj) => {
-//     if (obj instanceof Router) {
-//       app.use(obj.routes())
-//     }
-//   }
-// })
-
-
 
 app.listen('3000', function () {
   console.log('server listen prot:3000');

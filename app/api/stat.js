@@ -1,13 +1,14 @@
 const Router = require('koa-router')
-// const 
+const { StatDao } = require('../dao/stat');
+
 
 const router = new Router()
 
-router.get('/stat/:id', (ctx, next) => {
-  // const id = ctx.request.param
+router.get('/stat/:id', async (ctx, next) => {
+  const id = ctx.request.param
+  const a = await StatDao.createStat()
   ctx.body = {
-    id: ctx.params.id,
-    head: ctx.header.ttq
+    id: id,
   }
 })
 
