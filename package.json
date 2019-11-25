@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "start:cba": "nodemon cba.js"
+
   },
   "author": "ttq",
   "license": "ISC",
@@ -20,7 +22,7 @@
     "moment": "^2.24.0",
     "mysql2": "^2.0.1",
     "nba.js": "^0.6.1",
-    "nodemon": "^1.19.4",
+    "nodemon": "^2.0.1",
     "require-directory": "^2.1.1",
     "sequelize": "^5.21.2",
     "validator": "^12.0.0"

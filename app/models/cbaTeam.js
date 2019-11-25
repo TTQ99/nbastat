@@ -11,7 +11,7 @@ CbaTeam.init({
     primaryKey: true,
     autoIncrement: true
   },
-  team_id: Sequelize.INTEGER,
+  team_id: Sequelize.STRING,
   name: Sequelize.STRING,
 }, {
     sequelize,

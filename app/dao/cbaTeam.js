@@ -9,6 +9,17 @@ class CbaTeamDao {
     stat.save()
   }
 
+  static async getTeams() {
+    const cbaTeam = new cbaTeam()
+    const res = await cbaTeam.findAll({
+      where:{
+        name: '四川'
+      }
+    })
+    console.log(res,11111111);
+    
+  }
+
   static a () {
 
   }
