@@ -4,17 +4,10 @@ const { sequelize } = require('../../core/db')
 const { Sequelize, Model } = require('sequelize')
 
 const template = {
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
+
   // 队伍id
   team_id: Sequelize.INTEGER,
   team_name: Sequelize.STRING,
-
-  
-
   gp: Sequelize.INTEGER,
   w: Sequelize.INTEGER,
   l: Sequelize.INTEGER,
@@ -41,17 +34,24 @@ const template = {
   pfd: Sequelize.FLOAT,
   pts: Sequelize.FLOAT,
   plus_minus: Sequelize.FLOAT,
-  plus_minus_rank: Sequelize.INTEGER,
   cfid: Sequelize.INTEGER,
 }
 
 class Stat extends Model { }
 
-Stat.init(template, {
-  sequelize,
-  tableName: 'total'
-})
+Stat.init({
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  ...template
+}, {
+    sequelize,
+    tableName: 'total'
+  })
 
 module.exports = {
-  Stat
+  Stat,
+  template
 }
