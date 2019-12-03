@@ -1,40 +1,45 @@
 const nba = require('nba.js').default;
 const { StatDao } = require('../dao/stat')
-console.log(StatDao);
-
+const { Game } = require('../models/stat')
+const moment = require('moment')
 
 class Spider {
   static init () {
     console.log(123);
-    // this.createPer()
+    this.getShedule()
   }
 
   static async updatePer () {
     let data = await this.getData()
-
     console.log(data);
-
   }
   static async createPer () {
     let data = await this.getData()
-    console.log(data);
     for (const item of data) {
-      console.log(item);
-      StatDao.createStat(item)
-
+      await StatDao.createStat(item)
     }
-    console.log('suss');
-
-
-    // StatDao.createStat(data.LeagueDashTeamStats[0])
-
-    // await stat.createStat(data[0])
-
-    // data.forEach(async item => {
-    //   await stat.createStat(item)
-    // });
   }
 
+  static async getShedule () {
+    let day = moment().format('YYYYMMDD')
+    console.log(day);
+
+    let list = await nba.data.scoreboard({
+      date: day
+    })
+    let games = list.games || []
+    if (!games.length) return
+    for (const item of games) {
+      console.log(item);
+      console.log('11111111111111111111111');
+
+      let game = Game.createGame(item)
+
+    }
+
+    // console.log(list);
+
+  }
   static getData (params = {}) {
 
 

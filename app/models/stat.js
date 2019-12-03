@@ -1,7 +1,7 @@
 const moment = require('moment')
 
 const { sequelize } = require('../../core/db')
-const { Sequelize, Model } = require('sequelize')
+const { Sequelize, Model, Op } = require('sequelize')
 
 const template = {
 
@@ -51,7 +51,65 @@ Stat.init({
     tableName: 'total'
   })
 
+class Game extends Model {
+  static async createGame (v) {
+    console.log(v);
+
+    let games = await Game.findOne({
+      where: {
+        game_id: v.gameId
+      }
+    })
+    // console.log(games);
+
+    if (!games) {
+      let game = new Game()
+      game.game_id = v.gameId
+      game.date = v.startTimeUTC
+      game.hteam_id = v.hTeam.teamId
+      game.vteam_id = v.vTeam.teamId
+      game.hscore = v.hTeam.score
+      game.vscore = v.vTeam.score
+      game.save()
+    }
+
+  }
+
+  static async getGames (v) {
+    console.log(v.date);
+
+    console.log(new Date(`${v.date} 00:00:00`));
+
+    let games = await Game.findAll({
+      where: {
+        date: {
+          [Op.gt]: new Date(`${v.date} 00:00:00`),
+          [Op.lt]: new Date(`${v.date} 23:59:00`)
+        }
+      }
+    })
+    return games
+  }
+}
+Game.init({
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  game_id: Sequelize.STRING,
+  date: Sequelize.DATE,
+  hteam_id: Sequelize.STRING,
+  vteam_id: Sequelize.STRING,
+  hscore: Sequelize.STRING,
+  vscore: Sequelize.STRING,
+}, {
+    sequelize,
+    tableName: 'game'
+  })
+
 module.exports = {
   Stat,
+  Game,
   template
 }
