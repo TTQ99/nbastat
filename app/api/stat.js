@@ -3,6 +3,7 @@ const { StatDao } = require('../dao/stat');
 const { Game } = require('../models/stat')
 
 const nba = require('nba.js').default;
+const axios = require('axios')
 
 
 
@@ -46,6 +47,39 @@ router.get('/s', async (ctx, next) => {
   })
   ctx.body = {
     fn: list,
+  }
+})
+
+router.get('/you', async (ctx, next) => {
+  console.log(123111111111111);
+  let data = await axios.get('https://mcache.iuliao.com/mcache/jcrqsp/20191203.js?_=1575451928')
+  console.log(data);
+
+  var zcdz = {};
+
+  let obj = []
+  let a = []
+  for (const key in zcdz) {
+    a.push(zcdz[key][29])
+    obj.push({
+      num: key,
+      id: zcdz[key][0],
+      l: zcdz[key][1],
+      time: zcdz[key][3],
+      ht: zcdz[key][4],
+      vt: zcdz[key][5],
+      hs: zcdz[key][6],
+      vs: zcdz[key][7],
+      fs: zcdz[key][12],
+      o: zcdz[key][29]
+    })
+  }
+
+  // ctx.body = " zcdz['191203001']"
+  ctx.body = {
+    arr: a,
+    data: obj,
+    res: data.data
   }
 })
 
