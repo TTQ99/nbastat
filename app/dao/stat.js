@@ -1,16 +1,35 @@
-const { Stat } = require('../models/stat')
+const { Stat, template } = require('../models/stat')
 const { Sequelize, Op } = require('sequelize')
+console.log(template);
+
 
 class StatDao {
-  static async createStat (v) {
-    const stat = new Stat()
-    stat.team_id = 11
-    stat.team_name = 'laker'
-    stat.gp = 13
-    stat.w = 10
-    stat.l = 3
 
+  static async createStat (v) {
+    console.log(v);
+    let team = await Stat.findAll({
+      where: {
+        team_id: v.team_id
+      }
+    })
+    if (team.length) return
+    const stat = new Stat()
+
+    for (const key in template) {
+      stat[key] = v[key]
+    }
     stat.save()
+  }
+
+  static async getTeam (v) {
+    console.log(v.id);
+    let team = await Stat.findAll({
+      where: {
+        team_id: v.id
+      }
+    })
+    // console.log(team);
+    return team
 
   }
 }
