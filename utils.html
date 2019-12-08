@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <style>
+    .line {
+      border-bottom: 1px solid #DCDFE6;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <el-date-picker v-model="value1" type="date" value-format="yyyyMMDD" placeholder="选择日期">
+    </el-date-picker>
+    <el-button @click="getList">Button</el-button>
+    <el-table :data="list" style="width: 100%">
+      <el-table-column prop="num" label="日期"></el-table-column>
+      <el-table-column prop="l" label="日期"></el-table-column>
+      <el-table-column prop="time" label="日期"></el-table-column>
+      <el-table-column prop="ht" label="日期"></el-table-column>
+      <el-table-column label="日期">
+        <template slot-scope="scope">
+          <div>
+            {{scope.row.hs}} - {{scope.row.vs}}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="vt" label="日期"></el-table-column>
+      <el-table-column label="日期">
+        <template slot-scope="scope">
+          <div>
+            0
+          </div>
+          <div>
+            {{scope.row.o}}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="日期">
+        <template slot-scope="scope">
+          <div>
+            <el-row class="line">
+              <el-col :span="16" style="text-align: center;">{{scope.row.sp1+'+'+scope.row.sp2|sp}}</el-col>
+            </el-row>
+            <el-row class="line">
+              <el-col :span="8">{{scope.row.sp1}}</el-col>
+              <el-col :span="8">{{scope.row.sp2}}</el-col>
+              <el-col :span="8">{{scope.row.sp3}}</el-col>
+            </el-row>
+            <el-row class="line">
+              <el-col :span="16" :offset="8" style="text-align: center;">{{scope.row.sp3+'+'+scope.row.sp2|sp}}</el-col>
+            </el-row>
+          </div>
+          <div>
+            <el-row class="line">
+              <el-col :span="16" style="text-align: center;">{{scope.row.rsp1+'+'+scope.row.rsp2|sp}}</el-col>
+            </el-row>
+            <el-row class="line">
+              <el-col :span="8">{{scope.row.rsp1}}</el-col>
+              <el-col :span="8">{{scope.row.rsp2}}</el-col>
+              <el-col :span="8">{{scope.row.rsp3}}</el-col>
+            </el-row>
+            <el-row class="line">
+              <el-col :span="16" :offset="8" style="text-align: center;">{{scope.row.rsp3+'+'+scope.row.rsp2|sp}}
+              </el-col>
+            </el-row>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+  Vue.filter('sp', function (val) {
+    if (!val) return
+    let a = val.split('+')[0] - 0
+    let b = val.split('+')[1] - 0
+    let c = a * b / (a + b)
+    return c.toFixed(2)
+  })
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        visible: false,
+        value1: '20191208',
+        list: []
+      }
+    },
+    methods: {
+      getList() {
+        console.log(this.value1);
+        if (!this.value1) return
+        fetch(`http://localhost:3000/you/${this.value1}`).then(res => res.json()).then(data => {
+          console.log(data);
+          data.data.forEach(item => {
+            let a = item.time.split(',')
+            item.time = `${a[0]}-${a[1]}-${a[2]} ${a[3]}:${a[4]}`
+          });
+          this.list = data.data
+        })
+      }
+    },
+  })
+
+</script>
+
+</html>

@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "start:cba": "nodemon cba.js"
-
   },
   "author": "ttq",
   "license": "ISC",
