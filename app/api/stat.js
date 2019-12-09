@@ -6,8 +6,6 @@ const nba = require('nba.js').default;
 const axios = require('axios')
 
 
-
-
 const router = new Router()
 
 router.get('/stat/:id', async (ctx, next) => {

@@ -15,8 +15,7 @@
 
 <body>
   <div id="app">
-    <el-date-picker v-model="value1" type="date" value-format="yyyyMMDD" placeholder="选择日期">
-    </el-date-picker>
+    <el-input v-model="value1"></el-input>
     <el-button @click="getList">Button</el-button>
     <el-table :data="list" style="width: 100%">
       <el-table-column prop="num" label="日期"></el-table-column>
@@ -40,6 +39,7 @@
             {{scope.row.o}}
           </div>
         </template>
+
       </el-table-column>
       <el-table-column label="日期">
         <template slot-scope="scope">
@@ -92,7 +92,7 @@
     data: function () {
       return {
         visible: false,
-        value1: '20191208',
+        value1: '20191207',
         list: []
       }
     },

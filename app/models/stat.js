@@ -45,7 +45,19 @@ Stat.init({
     primaryKey: true,
     autoIncrement: true
   },
-  ...template
+  ...template,
+  last5: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  home: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  road: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  }
 }, {
     sequelize,
     tableName: 'total'

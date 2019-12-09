@@ -6,7 +6,7 @@ const moment = require('moment')
 class Spider {
   static init () {
     console.log(123);
-    // this.getShedule()
+    this.getShedule()
   }
 
   static async updatePer () {
