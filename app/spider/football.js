@@ -1,50 +1,31 @@
-const nba = require('nba.js').default;
-const { StatDao } = require('../dao/stat')
-const { Game } = require('../models/stat')
 const moment = require('moment')
 const axios = require('axios')
+const { Football } = require('../models/football')
 
-class Spider {
+class fSpider {
   static async init () {
-    console.log(123);
-    // this.getShedule()
-    eval('var b = 1222222222223')
-    // console.log(b);
-    // getFodds('20191211')
-    // let a = await this.getFMatch('20191211')
-    // console.log(a);
+    console.log('fSpider start');
+    // let a = await this.getFMatch('20191210')
+    // for (const key of a) {
+    //   await Football.createGame(key)
+    //   console.log(key.fid);
+    // }
+    // await Football.createGame(a[5])
+
+    // console.log('ttq');
+    // let date = moment('20190101')
+    // let day = date.format('YYYYMMDD')
+    // console.log(day);
+
 
   }
 
-  static async updatePer () {
-    let data = await this.getData()
-    console.log(data);
-  }
-  static async createPer () {
-    let data = await this.getData()
-    for (const item of data) {
-      await StatDao.createStat(item)
+
+  static async getGames (date) {
+    let list = await fSpider.getFMatch(date)
+    for (const key of list) {
+      await Football.createGame(key)
     }
-  }
-
-  static async getShedule () {
-    let day = moment().format('YYYYMMDD')
-    console.log(day);
-
-    let list = await nba.data.scoreboard({
-      date: day
-    })
-    let games = list.games || []
-    if (!games.length) return
-    for (const item of games) {
-      console.log(item);
-      console.log('11111111111111111111111');
-
-      let game = Game.createGame(item)
-
-    }
-
-    // console.log(list);
   }
 
   static async  getFMatch (date) {
@@ -54,8 +35,6 @@ class Spider {
     let obj = []
     let a = []
     for (const key in zcdz) {
-      console.log(key);
-
       a.push(zcdz[key][29])
       let m = {
         num: key,
@@ -99,39 +78,11 @@ class Spider {
   }
 
 
-  static getData (params = {}) {
-
-
-    // {
-    // Season: '2019-20',
-    // SeasonType: 'Regular+Season',
-    // PerMode: 'Per100Possessions',
-    // LastNGames: 0,
-    // LeagueID: '00',
-    // MeasureType: 'Base',
-    // Month: '0',
-    // OpponentTeamID: '0',
-    // PORound: '0',
-    // PaceAdjust: 'N',
-    // PlusMinus: 'N',
-    // Rank: 'N'
-    // }
-    return new Promise((re, rf) => {
-      nba.stats.teamGeneralStats({
-        ...params,
-        Season: '2019-20',
-      }).then(res => {
-        re(res.LeagueDashTeamStats)
-      }).catch(err => {
-        rf(err)
-      });
-    })
-  }
 }
 
 
 module.exports = {
-  Spider
+  fSpider
 }
 
 function computeSP (val, val2) {
@@ -162,3 +113,18 @@ async function getZcdz (date) {
   // console.log(matchs_sp);
   return zcdz
 }
+
+async function forTime (day) {
+  let flag = moment().isBefore(day)
+  // if ()
+  let day1 = moment(day).add(1, 'day').format('YYYYMMDD')
+  fSpider.getGames(day)
+  if (!flag) {
+    console.log(`${day} end`);
+    // forTime(day1)
+  } else {
+    console.log('all end');
+  }
+}
+
+// forTime('20190101')

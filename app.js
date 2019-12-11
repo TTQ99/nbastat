@@ -4,10 +4,12 @@ const parser = require('koa-bodyparser')
 const catchError = require('./middlewares/exception')
 
 const { Spider } = require('./app/spider/index')
+const { fSpider } = require('./app/spider/football')
 const cors = require('@koa/cors')
 
 
 Spider.init()
+fSpider.init()
 
 const app = new Koa()
 app.use(cors());

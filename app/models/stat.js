@@ -65,14 +65,12 @@ Stat.init({
 
 class Game extends Model {
   static async createGame (v) {
-    console.log(v);
 
     let games = await Game.findOne({
       where: {
         game_id: v.gameId
       }
     })
-    // console.log(games);
 
     if (!games) {
       let game = new Game()
@@ -88,9 +86,7 @@ class Game extends Model {
   }
 
   static async getGames (v) {
-    console.log(v.date);
 
-    console.log(new Date(`${v.date} 00:00:00`));
 
     let games = await Game.findAll({
       where: {

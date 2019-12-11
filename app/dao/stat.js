@@ -1,12 +1,11 @@
 const { Stat, template } = require('../models/stat')
 const { Sequelize, Op } = require('sequelize')
-console.log(template);
+// console.log(template);
 
 
 class StatDao {
 
   static async createStat (v) {
-    console.log(v);
     let team = await Stat.findAll({
       where: {
         team_id: v.team_id
