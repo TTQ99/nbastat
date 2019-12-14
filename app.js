@@ -9,7 +9,7 @@ const cors = require('@koa/cors')
 
 
 Spider.init()
-fSpider.init()
+
 
 const app = new Koa()
 app.use(cors());

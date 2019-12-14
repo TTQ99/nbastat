@@ -95,22 +95,18 @@ function computeSP (val, val2) {
 async function getMatchsSP (date) {
   let { data: fodds } = await axios.get(`https://mcache.iuliao.com/mcache/jcsp/${date}.js?_=1575534882`)
   eval(fodds.replace('new Array()', '{}'))
-  // console.log(matchs_sp);
   return matchs_sp
 }
 
 async function getMatchsRSP (date) {
   let { data: rodds } = await axios.get(`https://mcache.iuliao.com/mcache/jcrqsp/${date}.js?_=1575451928`)
   eval(rodds.replace('new Array()', '{}'))
-  // console.log(matchs_sp);
   return matchs_rqsp
 }
 
 async function getZcdz (date) {
   let { data: match } = await axios.get(`https://mcache.iuliao.com/mcache/livejcjs/${date}.js?_=1575534882`)
-
   eval(match.replace('new Array()', '{}'))
-  // console.log(matchs_sp);
   return zcdz
 }
 
@@ -127,4 +123,4 @@ async function forTime (day) {
   }
 }
 
-// forTime('20190101')
+// forTime('20191211')

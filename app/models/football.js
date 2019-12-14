@@ -63,9 +63,29 @@ class Football extends Model {
       game.rsp23 = v.rsp23
       game.save()
     } else {
-      console.log(a);
-
-      return
+      a.num = v.num
+      a.fid = v.fid
+      a.l = v.l
+      a.time = v.time
+      a.ht = v.ht
+      a.vt = v.vt
+      a.hs = v.hs
+      a.vs = v.vs
+      a.fs = v.fs
+      a.o = v.o
+      a.res = v.res
+      a.res1 = v.res1
+      a.sp1 = v.sp1
+      a.sp2 = v.sp2
+      a.sp3 = v.sp3
+      a.sp12 = v.sp12
+      a.sp23 = v.sp23
+      a.rsp1 = v.rsp1
+      a.rsp2 = v.rsp2
+      a.rsp3 = v.rsp3
+      a.rsp12 = v.rsp12
+      a.rsp23 = v.rsp23
+      a.save()
     }
 
     // let game = new Football()

@@ -6,14 +6,11 @@ const axios = require('axios')
 
 class Spider {
   static async init () {
-    console.log(123);
     // this.getShedule()
-    eval('var b = 1222222222223')
     // console.log(b);
     // getFodds('20191211')
     // let a = await this.getFMatch('20191211')
     // console.log(a);
-
   }
 
   static async updatePer () {
