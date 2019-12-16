@@ -6,7 +6,7 @@ class InitManager {
   static initCore (app) {
     InitManager.app = app
     this.initLoadRouter()
-    InitManager.loadConfig()
+    // InitManager.loadConfig()
 
   }
 
