@@ -92,9 +92,13 @@
     data: function () {
       return {
         visible: false,
-        value1: '20191207',
+        value1: '',
         list: []
       }
+    },
+    created() {
+      let date = new Date()
+      this.value1 = `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`
     },
     methods: {
       getList() {
