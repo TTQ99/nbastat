@@ -1,6 +1,6 @@
 const nba = require('nba.js').default;
 const { StatDao } = require('../dao/stat')
-const { Game } = require('../models/stat')
+const { Game, Stat } = require('../models/stat')
 const moment = require('moment')
 const axios = require('axios')
 
@@ -10,7 +10,8 @@ class Spider {
     // console.log(b);
     // getFodds('20191211')
     // let a = await this.getFMatch('20191211')
-    // console.log(a);
+    console.log(123);
+    getLeague()
   }
 
   static async updatePer () {
@@ -44,7 +45,7 @@ class Spider {
     // console.log(list);
   }
 
-  static async  getFMatch (date) {
+  static async getFMatch (date) {
     let zcdz = await getZcdz(date)
     let matchs_sp = await getMatchsSP(date)
     let matchs_rqsp = await getMatchsRSP(date)
@@ -126,36 +127,40 @@ class Spider {
   }
 }
 
+function getLeague () {
+  axios.post('https://gm.1zplay.com/api/v1/getServerTime').then(res => {
+    console.log(res.data)
+    axios.post('https://gm.1zplay.com/api/v1/league/match/0',
+      { "game_id": 1, "tournament_id": "nHFOtC5FWa8%3D", "sign": "a5388e9a9efc449803120c1b39749445", "time": "1626512839" }
+    ).then(res1 => {
+      console.log(res1.data);
+      if (res1.data && res1.data.data.list) {
+        console.log(res1.data)
+        let v = res1.data.data.list[100]
+        let game = {
+
+        }
+        game.status_id = v.status_id
+        game.match_time = v.match_time
+        game.match_id = v.match_id
+        game.away_score = v.away_score
+        game.home_score = v.home_score
+        game.away = v.away.name_en || ''
+        game.home = v.home.name_en || ''
+        console.log(game)
+
+        let a = Stat.createGame(game)
+        res1.data.data.list.forEach(v => {
+
+        });
+
+      }
+    })
+  })
+}
+
 
 module.exports = {
   Spider
 }
 
-function computeSP (val, val2) {
-  val = val - 0
-  val2 = val2 - 0
-  let c = val * val2 / (val + val2)
-  return c.toFixed(2) + ''
-}
-
-async function getMatchsSP (date) {
-  let { data: fodds } = await axios.get(`https://mcache.iuliao.com/mcache/jcsp/${date}.js?_=1575534882`)
-  eval(fodds.replace('new Array()', '{}'))
-  // console.log(matchs_sp);
-  return matchs_sp
-}
-
-async function getMatchsRSP (date) {
-  let { data: rodds } = await axios.get(`https://mcache.iuliao.com/mcache/jcrqsp/${date}.js?_=1575451928`)
-  eval(rodds.replace('new Array()', '{}'))
-  // console.log(matchs_sp);
-  return matchs_rqsp
-}
-
-async function getZcdz (date) {
-  let { data: match } = await axios.get(`https://mcache.iuliao.com/mcache/livejcjs/${date}.js?_=1575534882`)
-
-  eval(match.replace('new Array()', '{}'))
-  // console.log(matchs_sp);
-  return zcdz
-}

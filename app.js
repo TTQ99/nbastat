@@ -23,5 +23,5 @@ app.use(parser())
 InitManager.initCore(app)
 
 app.listen('8080', function () {
-  console.log('server listen prot:3000');
+  console.log('server listen prot:8080');
 })

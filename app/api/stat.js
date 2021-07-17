@@ -29,9 +29,7 @@ router.get('/test/:name', async (ctx, next) => {
 })
 
 router.get('/test', async (ctx, next) => {
-  let list = await nba.data.scoreboard({
-    date: '20191203'
-  })
+
   ctx.body = {
     fn: list,
   }
@@ -48,6 +46,14 @@ router.get('/s', async (ctx, next) => {
   }
 })
 
+router.get('/ttq', async (ctx, next) => {
+  await next()
+  // let 
+
+  ctx.body = {
+    fn: 'list',
+  }
+})
 router.get('/you/:date', async (ctx, next) => {
   let date = ctx.params.date || '20191231'
   console.log(123111111111111);

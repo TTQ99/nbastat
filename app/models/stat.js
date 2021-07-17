@@ -3,41 +3,30 @@ const moment = require('moment')
 const { sequelize } = require('../../core/db')
 const { Sequelize, Model, Op } = require('sequelize')
 
-const template = {
 
-  // 队伍id
-  team_id: Sequelize.INTEGER,
-  team_name: Sequelize.STRING,
-  gp: Sequelize.INTEGER,
-  w: Sequelize.INTEGER,
-  l: Sequelize.INTEGER,
-  w_pct: Sequelize.FLOAT,
-  min: Sequelize.FLOAT,
-  fgm: Sequelize.FLOAT,
-  fga: Sequelize.FLOAT,
-  fg_pct: Sequelize.FLOAT,
-  fg3m: Sequelize.FLOAT,
-  fg3a: Sequelize.FLOAT,
-  fg3_pct: Sequelize.FLOAT,
-  ftm: Sequelize.FLOAT,
-  fta: Sequelize.FLOAT,
-  ft_pct: Sequelize.FLOAT,
-  oreb: Sequelize.FLOAT,
-  dreb: Sequelize.FLOAT,
-  reb: Sequelize.FLOAT,
-  ast: Sequelize.FLOAT,
-  tov: Sequelize.FLOAT,
-  stl: Sequelize.FLOAT,
-  blk: Sequelize.FLOAT,
-  blka: Sequelize.FLOAT,
-  pf: Sequelize.FLOAT,
-  pfd: Sequelize.FLOAT,
-  pts: Sequelize.FLOAT,
-  plus_minus: Sequelize.FLOAT,
-  cfid: Sequelize.INTEGER,
+class Stat extends Model {
+  static async createGame (v) {
+
+    let games = await Game.findOne({
+      where: {
+        match_id: v.match_id
+      }
+    })
+
+    if (!games) {
+      let game = new Game()
+      game.status_id = v.status_id
+      game.match_time = v.match_time
+      game.match_id = v.match_id
+      game.away_score = v.away_score
+      game.home_score = v.home_score
+      game.away = v.away
+      game.home = v.home
+      game.save()
+    }
+
+  }
 }
-
-class Stat extends Model { }
 
 Stat.init({
   id: {
@@ -45,23 +34,37 @@ Stat.init({
     primaryKey: true,
     autoIncrement: true
   },
-  ...template,
-  last5: {
-    type: Sequelize.BOOLEAN,
+  status_id: {
+    type: Sequelize.INTEGER,
+    defaultValue: false
+  },
+  match_time: {
+    type: Sequelize.DATE,
+    defaultValue: false
+  },
+  match_id: {
+    type: Sequelize.STRING,
+  },
+  away_score: {
+    type: Sequelize.INTEGER,
+    defaultValue: false
+  },
+  home_score: {
+    type: Sequelize.INTEGER,
+    defaultValue: false
+  },
+  away: {
+    type: Sequelize.STRING,
     defaultValue: false
   },
   home: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.STRING,
     defaultValue: false
   },
-  road: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
-  }
 }, {
-    sequelize,
-    tableName: 'total'
-  })
+  sequelize,
+  tableName: 'lpl'
+})
 
 class Game extends Model {
   static async createGame (v) {
@@ -112,10 +115,10 @@ Game.init({
   hscore: Sequelize.STRING,
   vscore: Sequelize.STRING,
 }, {
-    sequelize,
-    tableName: 'game'
-  })
-
+  sequelize,
+  tableName: 'game'
+})
+const template = {}
 module.exports = {
   Stat,
   Game,
