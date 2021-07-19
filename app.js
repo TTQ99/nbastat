@@ -3,6 +3,7 @@ const InitManager = require('./core/init')
 const parser = require('koa-bodyparser')
 const catchError = require('./middlewares/exception')
 
+const OneZ = require('./app/spider/1z.js')
 const { Spider } = require('./app/spider/index')
 const { fSpider } = require('./app/spider/football')
 const cors = require('@koa/cors')
@@ -10,8 +11,8 @@ const static_ = require('koa-static')
 
 
 
+OneZ.init()
 Spider.init()
-
 
 const app = new Koa()
 app.use(cors());

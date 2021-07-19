@@ -4,7 +4,7 @@ const { Sequelize, Model, Op } = require('sequelize')
 const template = {
 
   // 队伍id
-  num: Sequelize.STRING,
+  num1: Sequelize.STRING,
   fid: Sequelize.STRING,
   l: Sequelize.STRING,
   time: Sequelize.STRING,
@@ -102,9 +102,9 @@ Football.init({
   },
   ...template,
 }, {
-    sequelize,
-    tableName: 'football'
-  })
+  sequelize,
+  tableName: 'football'
+})
 
 module.exports = {
   Football

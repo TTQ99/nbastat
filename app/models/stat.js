@@ -7,14 +7,14 @@ const { Sequelize, Model, Op } = require('sequelize')
 class Stat extends Model {
   static async createGame (v) {
 
-    let games = await Game.findOne({
+    let games = await Stat.findOne({
       where: {
         match_id: v.match_id
       }
     })
 
     if (!games) {
-      let game = new Game()
+      let game = new Stat()
       game.status_id = v.status_id
       game.match_time = v.match_time
       game.match_id = v.match_id
@@ -28,43 +28,6 @@ class Stat extends Model {
   }
 }
 
-Stat.init({
-  id: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  status_id: {
-    type: Sequelize.INTEGER,
-    defaultValue: false
-  },
-  match_time: {
-    type: Sequelize.DATE,
-    defaultValue: false
-  },
-  match_id: {
-    type: Sequelize.STRING,
-  },
-  away_score: {
-    type: Sequelize.INTEGER,
-    defaultValue: false
-  },
-  home_score: {
-    type: Sequelize.INTEGER,
-    defaultValue: false
-  },
-  away: {
-    type: Sequelize.STRING,
-    defaultValue: false
-  },
-  home: {
-    type: Sequelize.STRING,
-    defaultValue: false
-  },
-}, {
-  sequelize,
-  tableName: 'lpl'
-})
 
 class Game extends Model {
   static async createGame (v) {
@@ -108,12 +71,13 @@ Game.init({
     primaryKey: true,
     autoIncrement: true
   },
-  game_id: Sequelize.STRING,
-  date: Sequelize.DATE,
-  hteam_id: Sequelize.STRING,
-  vteam_id: Sequelize.STRING,
-  hscore: Sequelize.STRING,
-  vscore: Sequelize.STRING,
+  status_id: Sequelize.STRING,
+  match_time: Sequelize.DATE,
+  match_id: Sequelize.STRING,
+  away_score: Sequelize.STRING,
+  home_score: Sequelize.STRING,
+  away: Sequelize.STRING,
+  home: Sequelize.STRING,
 }, {
   sequelize,
   tableName: 'game'
